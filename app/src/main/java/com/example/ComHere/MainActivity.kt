@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         drawBasic()
         getObjectDetectionResult()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
