@@ -15,16 +15,16 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // 파이어 베이스 토픽 추가
-        FirebaseMessaging.getInstance().subscribeToTopic("test")
-            .addOnCompleteListener { task ->
-                var msg = "Subscribed to the topic"
-                if (!task.isSuccessful) {
-                    msg = "Failed to subscribe to the topic"
-                }
-                Log.d(TAG, msg)
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-            }
+        // 파이어 베이스 토픽 구독
+//        FirebaseMessaging.getInstance().subscribeToTopic("test")
+//            .addOnCompleteListener { task ->
+//                var msg = "Subscribed to the topic"
+//                if (!task.isSuccessful) {
+//                    msg = "Failed to subscribe to the topic"
+//                }
+//                Log.d(TAG, msg)
+//                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//            }
 
         // 일정 시간 지연 이후 실행하기 위한 코드
         Handler(Looper.getMainLooper()).postDelayed({

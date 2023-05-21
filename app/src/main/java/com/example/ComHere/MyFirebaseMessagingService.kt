@@ -2,7 +2,9 @@ package com.example.ComHere
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -25,8 +27,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             createNotificationChannel()
 
-            val message = remoteMessage.data["title"]
-            val title = remoteMessage.data["message"]
+            val message = remoteMessage.data["message"]
+            val title = remoteMessage.data["title"]
 
             if (title != null) {
                 if (message != null) {
@@ -73,12 +75,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun showNotification(title: String, message: String) {
+
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_push)
             .setContentTitle(title)
             .setContentText(message)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
 
         val notificationManager = NotificationManagerCompat.from(this)
         val notificationId = 0
