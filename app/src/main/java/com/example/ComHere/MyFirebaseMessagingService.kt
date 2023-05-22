@@ -81,6 +81,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
+
+        val groupKey = "com.example.ComHere.NOTIFICATION_GROUP"
+
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_push)
             .setContentTitle(title)
@@ -88,9 +91,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
+            .setGroup(groupKey)
 
         val notificationManager = NotificationManagerCompat.from(this)
-        val notificationId = 0
+        val notificationId = System.currentTimeMillis().toInt()
         notificationManager.notify(notificationId, notificationBuilder.build())
+
+        val summaryNotification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_push)
+            .setStyle(NotificationCompat.InboxStyle()
+                .setSummaryText("빈자리 알림"))
+            .setGroup(groupKey)
+            .setGroupSummary(true)
+            .build()
+
+        notificationManager.notify(0, summaryNotification)
     }
 }
